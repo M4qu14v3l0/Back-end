@@ -11,26 +11,13 @@
 
 const express = require('express')
 const fs = require('fs/promises');
+const { send } = require('process');
 
 const app = express()
 
-app.get('/getProductos' , (req , res) => {
-    res.send("hola")
-})
 
 
-app.get('/getProductosRandom' , (req , res) => {
-    res.send("productos random")
-})
-
-const server = app.listen(8080 , () => {
-    console.log('Servidor 8080 siendo escuchado')
-})
-
-
-
-
-
+//const productsContainer = document.querySelector('#products__all')
 
 
 class Container {
@@ -141,11 +128,13 @@ const obj = new Container("index.txt")
 
 
 async function main() {
-    console.log(await obj.save(obj1))
-    console.log(await obj.save(obj2))
-    console.log(await obj.save(obj3))   
+    // console.log(await obj.save(obj1))
+    // console.log(await obj.save(obj2))
+    // console.log(await obj.save(obj3))   
 
-    //console.log(await obj.getById(2))
+    // console.log(await obj.getById(2))
+
+    return await obj.getAll()
 }
 
 //main()
@@ -153,7 +142,34 @@ async function main() {
 // obj.getAll()
 //obj.getById(2)
 //obj.deleteById(1)
+//obj.getById(2)
 //obj.deleteAll()
 //main()
 
 //---test passed :D--- If you wanna test it , descomment them.
+
+
+
+
+
+// app.get('/getProductosRandom' , (req , res) => {
+//     res.send("productos random")
+// })
+
+const server = app.listen(8080 , () => {
+    console.log('Servidor 8080 siendo escuchado')
+})
+
+// test passed
+app.get('/getProductos' , async (req , res) => {
+    let values = await main()
+    res.send(values)
+})
+
+//test passed
+app.get('/getProductosRandom' , async (req , res) => {
+    let value = await main()
+    let item = value[Math.floor(Math.random()*value.length)]
+    res.send(item)
+})
+

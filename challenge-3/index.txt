@@ -1,0 +1,20 @@
+[
+  {
+    "title": "Carrito",
+    "price": 200,
+    "thumbnail": "urlCarrito",
+    "id": 1
+  },
+  {
+    "title": "Banco",
+    "price": 400,
+    "thumbnail": "urlBanco",
+    "id": 2
+  },
+  {
+    "title": "Cocina",
+    "price": 2000,
+    "thumbnail": "urlCocina",
+    "id": 3
+  }
+]
