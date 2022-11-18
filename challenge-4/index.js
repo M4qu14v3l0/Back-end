@@ -1,8 +1,14 @@
 const express = require('express')
 
+const { Router } = express
+
 const app = express()
 
-const productos = [
+app.use(express.json())
+app.use(express.urlencoded({extended: true}))
+
+
+let productos = [
     {
         id : 1 ,
         title : 'Carrito' , 
@@ -27,55 +33,61 @@ const server = app.listen(8080 , () => {
     console.log('Servidor 8080 siendo escuchado')
 })
 
-app.get('/api/productos' , (req , res) => {
-    console.log('Get recibido')
 
+const routerProductos = new Router()
+
+routerProductos.get('/' , (req , res) => {
+    console.log('Get recibido')
     res.send(productos)
 })
 
-app.get('/api/productos/:id' , (req , res) => {
-    console.log('Get por ID recibido')
-
-    productById = productos.find(e => e.id == req.params.id)
-    
-    res.send(productById)
-})
-
-app.post('/api/productos' , (req , res) => {
+routerProductos.post('/' , (req , res) => {
     console.log('Post recibido')
-
     try{
-
         const newProductoId = productos[productos.length - 1].id + 1
-        const newProducto = {...req.body , id : newProductoId}
+        const newProducto = {...req.body, id :  newProductoId}
         productos.push(newProducto)
         res.send(productos)
-    
     }catch{
         const newProducto = {...req.body , id:1}
-        newProducto.id
+        productos.push(newProducto)
         res.send(productos)
     }
 })
 
-app.put('/api/productos/:id' , (req , res) => {
+routerProductos.get('/:id' , (req , res) => {
+
+    console.log('Get por ID recibido')
+
+    const productById = productos.find(e => e.id == req.params.id)  
+
+    if(productById !== undefined){
+        res.send(productById)
+    }else{
+        res.json({Error: `No existe un producto de id: ${req.params.id}`})
+    }
+})
+
+
+routerProductos.put('/:id' , (req , res) => {
     console.log(' Put recibido')
+    productById = productos.findIndex( x => x.id == req.params.id)
+    productos[productById] = req.body
 
-    productById = productos.find(e => e === req.params.id)
-    productById = req.body
-
-    res.send(productos)
-
+    res.json({ok: 'ok'})
 })
 
-app.delete('/api/productos/:id' , (req , res) => {
-    console.log('delete receibido')
 
-    deleteProducto = productos.filter((e) => e !== req.params.id)
+routerProductos.delete('/:id' , (req , res) => {
+    
+    console.log('delete recibido')
+    const id = req.params.id;
 
-    productos = deleteProducto
-
+    productos = productos.filter((x) => x.id != id)
+    console.log(productos)
     res.send(productos)
 })
+
+app.use('/api/productos' , routerProductos)
 
 
