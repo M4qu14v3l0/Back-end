@@ -55,39 +55,49 @@ routerProductos.post('/' , (req , res) => {
     }
 })
 
-routerProductos.get('/:id' , (req , res) => {
+routerProductos.get('/:id' , CheckId ,(req , res) => {
 
     console.log('Get por ID recibido')
 
     const productById = productos.find(e => e.id == req.params.id)  
 
-    if(productById !== undefined){
-        res.send(productById)
-    }else{
-        res.json({Error: `No existe un producto de id: ${req.params.id}`})
-    }
+    res.send(productById)
+
 })
 
 
-routerProductos.put('/:id' , (req , res) => {
+routerProductos.put('/:id' , CheckId , (req , res) => {
     console.log(' Put recibido')
-    productById = productos.findIndex( x => x.id == req.params.id)
-    productos[productById] = req.body
 
+    productos[req.params.id - 1] = {id : req.params.id , ...req.body}
+    
     res.json({ok: 'ok'})
-})
+    })
 
 
-routerProductos.delete('/:id' , (req , res) => {
+
+
+routerProductos.delete('/:id' , CheckId ,(req , res) => {
     
     console.log('delete recibido')
     const id = req.params.id;
-
+    // productos sigue siendo el mismo array que defino arriba, profe, por eso no le puse let o const, ya que en el array de la línea 11 ya le puse el let
+    // filtrar ("eliminar") lo estoy haciendo en el mismo array que contiene mis productos
     productos = productos.filter((x) => x.id != id)
-    console.log(productos)
     res.send(productos)
 })
 
 app.use('/api/productos' , routerProductos)
+
+
+//Middleware
+
+function CheckId(req , res , next){
+    if(productos.find(e => e.id == req.params.id)){
+        next()
+    }else{
+        res.json({error: 'producto no encontrado'})
+    }
+}
 
 
