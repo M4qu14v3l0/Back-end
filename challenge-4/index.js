@@ -7,6 +7,7 @@ const app = express()
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 
+//global variable
 
 let productos = [
     {
@@ -55,7 +56,7 @@ routerProductos.post('/' , (req , res) => {
     }
 })
 
-routerProductos.get('/:id' , CheckId ,(req , res) => {
+routerProductos.get('/:id' , checkId ,(req , res) => {
 
     console.log('Get por ID recibido')
 
@@ -66,10 +67,14 @@ routerProductos.get('/:id' , CheckId ,(req , res) => {
 })
 
 
-routerProductos.put('/:id' , CheckId , (req , res) => {
+routerProductos.put('/:id' , checkId , (req , res) => {
     console.log(' Put recibido')
 
-    productos[req.params.id - 1] = {id : req.params.id , ...req.body}
+    const productById = productos.find(e => e === req.params.id)
+
+    const index = productos.indexOf(productById)
+
+    productos.splice(index - 1, 1 , req.body)
     
     res.json({ok: 'ok'})
     })
@@ -77,7 +82,7 @@ routerProductos.put('/:id' , CheckId , (req , res) => {
 
 
 
-routerProductos.delete('/:id' , CheckId ,(req , res) => {
+routerProductos.delete('/:id' , checkId ,(req , res) => {
     
     console.log('delete recibido')
     const id = req.params.id;
@@ -92,7 +97,7 @@ app.use('/api/productos' , routerProductos)
 
 //Middleware
 
-function CheckId(req , res , next){
+function checkId(req , res , next){
     if(productos.find(e => e.id == req.params.id)){
         next()
     }else{
