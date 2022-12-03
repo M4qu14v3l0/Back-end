@@ -28,11 +28,36 @@ let productos = [
         price : 2000 , 
         thumbnail : 'urlCocina',
     },
+    {
+        id : 4,
+        title : 'Licuadora', 
+        price : 4000 , 
+        thumbnail : 'urlLicuadora',
+    },
 ]
+
+
+//pug 
+
+// app.set('views' , './views')
+// app.set('view engine' , 'pug')
+
+//  app.get('/datos' , (req,res) => {
+//      res.render('nivel' , req.query)  
+//  })
+//
+
+
+//ejs
+
+
+app.set('view engine' , 'ejs')
+
 
 const server = app.listen(8080 , () => {
     console.log('Servidor 8080 siendo escuchado')
 })
+
 
 
 const routerProductos = new Router()

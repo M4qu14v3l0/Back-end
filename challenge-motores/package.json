@@ -1,5 +1,5 @@
 {
-  "name": "challenge-4",
+  "name": "challenge-motores",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -11,6 +11,10 @@
   "dependencies": {
     "ejs": "^3.1.8",
     "express": "^4.18.2",
+    "express-handlebars": "^6.0.6",
+    "handlebars": "^4.7.7",
+    "modules": "^0.4.0",
+    "node": "^19.2.0",
     "pug": "^3.0.2"
   }
 }

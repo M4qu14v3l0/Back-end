@@ -1,0 +1,7 @@
+Personalmente prefiero EJS, porque me parece más simple la implementación del javascript
+dentro de una estructura html, sin embargo handlebars también me parece muy bueno, sin embargo 
+la implementación de javascript dentro de un html, no me hace sentir trabajando como tal con javascript
+en pug , todo lo contrario, sí sentí más la implementación de javascript pero la estructura de html
+no me gusta para nada, me siento escribiendo en el aire.
+
+Mi preferido y que deseo usar para mi proyecto es EJS
